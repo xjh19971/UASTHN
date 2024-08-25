@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel = "icon" href = "assets/title_image.png" type = "image/x-icon">
+        
+  <meta charset="utf-8">
+  <meta name="description"
+        content="UASTHN: Uncertainty-Aware Deep Homography Estimation for UAV Satellite-Thermal Geo-localization">
+  <meta name="keywords" content="Satellite Imagery, Thermal Imagery, Visual Geo-localization">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:image" content="assets/Thumbnail.png" />        
+  <title>UASTHN: Deep Homography Estimation for UAV Thermal Geo-localization with Satellite Imagery</title>
+
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+</head>
+<body>
+
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu">
+      <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+        <a class="navbar-item" href="https://xjh19971.github.io/STHN/">
+        <span class="icon">
+            <i class="fas fa-home"></i>
+        </span>
+        </a>
+  
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">
+            Related Research
+          </a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://xjh19971.github.io/STGL/">
+              STGL
+            </a>
+          </div>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://xjh19971.github.io/STHN/">
+              STHN
+            </a>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+  </nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-2 publication-title">UASTHN: Uncertainty-Aware Deep Homography Estimation for UAV Satellite-Thermal Geo-localization</h1>
+          <h2 class="title is-6 publlication-title"></h2>
+          <div class="is-size-6 publication-authors">
+            <span class="author-block">
+              <a href="https://xjh19971.github.io">Jiuhong Xiao</a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a href="https://engineering.nyu.edu/faculty/giuseppe-loianno">Giuseppe Loianno</a><sup>1</sup>,</span> 
+          </div>
+
+          <div class="is-size-6 publication-authors">
+            <span class="author-block"><sup>1</sup>New York University</a>,
+          </div>
+
+          <div class="column has-text-centered">
+              <!-- <span class="link-block">
+                <a href="https://arxiv.org/abs/2306.02994"
+                   class="external-link button is-normal ">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span> -->
+              <!-- <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=KVHFcNsK8Bg&ab_channel=ARPLNYU"
+                   class="external-link button is-normal ">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span> -->
+              <span class="link-block">
+                <a href="https://github.com/arplaboratory/UASTHN"
+                   class="external-link button is-normal ">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- <section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+        <video id="dinov2_gardens" autoplay controls muted loop playsinline height="100%">
+          <source src="./data/demo/STHN_subtitle_final.mp4"
+                  type="video/mp4">
+        </video>
+    </div>
+  </div>
+</section> -->
+
+<section class="hero is-small is-light">
+  <div class="hero-body">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Geo-localization is an essential component of Unmanned Aerial Vehicle (UAV) navigation systems to ensure precise absolute self-localization in outdoor environments. To address the challenges of GPS signal interruptions or low illumination, Thermal Geo-localization (TG) employs aerial thermal imagery to align with reference satellite maps to accurately determine the UAV’s location. However, existing TG methods lack uncertainty measurement in their outputs, compromising system robustness in the presence of textureless or corrupted thermal images, self-similar or outdated satellite maps, geometric noises, or thermal images exceeding satellite maps. To overcome these limitations, this paper presents \textit{UASTHN}, a novel approach for Uncertainty Estimation (UE) in Deep Homography Estimation (DHE) tasks for TG applications. Specifically, we introduce a novel Crop-based Test-Time Augmentation (CropTTA) strategy, which leverages the homography consensus of cropped image views to measure data uncertainty effectively. This approach complements Deep Ensembles (DE), offering comparable performance with improved efficiency and seamless integration with any DHE model. Extensive experiments across multiple DHE models demonstrate the effectiveness and efficiency of CropTTA in TG applications. Analysis of detected failure cases underscores the improved reliability of CropTTA under challenging conditions. Finally, we demonstrate the capability of combining CropTTA and DE for a comprehensive assessment of both data and model uncertainty. Our research provides profound insights into the broader intersection of localization and uncertainty estimation. The code will be publicly available.
+          </p>
+        </div>
+      </div>
+    </div>
+    </div>
+</section>
+
+<!-- <section class="section">
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-four-fifths">
+      <h2 class="title is-3">Boson-nighttime</h2>
+      <div class="content has-text-justified">
+        <p>
+          We used FLIR's Boson thermal imager (8.7 mm focal length, 640p resolution, and 50-degree horizontal field of view). The collected images are nadir at approx. 1m/px spatial resolution. We performed six flights from 9:00 PM to 4:00 AM and label this dataset as Boson-nighttime, accordingly. To create a single map, we first run a structure-from-motion (SfM) algorithm to reconstruct the thermal map from multiple views. Subsequently, orthorectification is performed by aligning the photometric satellite maps with thermal maps at the same spatial resolution. The ground area covered by Boson-nighttime measures 33km^2 in total. The most prevalent map feature is the desert, with small portions of farms, roads, and buildings. The low-contrast self-similar thermal features in the desert regions have made it difficult for geo-localization at a finer scale. The Bing satellite map (https://www.bing.com/maps/aerial) is cropped in the corresponding area as our satellite reference map. We tile the thermal map into 512x512 px thermal image crops with a stride of 35 px. Each thermal image crop pairs with the corresponding satellite image crop. Areas covered by three flights of Boson-nighttime are used for training and validation. The remaining areas, covered by the other three flights are used for testing. The train/validation/test splits for Boson-nighttime are 10256/13011/26568 pairs of satellite and thermal image crops, respectively. 
+        </p>
+      </div>
+      <p><img id="tgm_1" src="./data/boson-nighttime.png" width="500"></p>
+    </div>
+  </div>
+
+ 
+</section>
+
+<section class="hero is-light">
+<div class="hero-body">
+  <div class="columns is-centered has-text-centered">
+    <div class="column">
+      <h2 class="title is-3" >SGM Results - <span style="color: green;">Green</span> is Correct, <span style="color: red;">Red</span> is Wrong</h2>
+      <p></p>
+    </div>
+  </div>
+
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+
+      <div class="column has-text-centered">
+        <div class="content">
+          <h2 class="title is-4">Input</h2>
+          <img id="sgm_1" src="./data/sgm/image35.gif" width="400">
+          <img id="sgm_2" src="./data/sgm/image42.gif" width="400">
+          <img id="sgm_3" src="./data/sgm/image36.gif" width="400">
+          <img id="sgm_4" src="./data/sgm/image39.gif" width="400">
+        </div>
+      </div>
+
+      <div class="column has-text-centered">
+        <div class="content">
+          <h2 class="title is-4">Baseline</h2>
+          <img id="sgm_5" src="./data/sgm/image31.gif" width="400">
+          <img id="sgm_6" src="./data/sgm/image32.gif" width="400">
+          <img id="sgm_7" src="./data/sgm/image33.gif" width="400">
+          <img id="sgm_8" src="./data/sgm/image34.gif" width="400">
+        </div>
+      </div>
+
+      <div class="column has-text-centered">
+        <div class="content">
+          <h2 class="title is-4">Ours</h2>
+          <img id="sgm_9" src="./data/sgm/image37.gif" width="400">
+          <img id="sgm_6" src="./data/sgm/image38.gif" width="400">
+          <img id="sgm_7" src="./data/sgm/image40.gif" width="400">
+          <img id="sgm_8" src="./data/sgm/image41.gif" width="400">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+
+<section class="section">
+  <div class="columns is-centered has-text-centered">
+    <div class="column">
+      <h2 class="title is-3">TGM Generated Thermal Images</h2>
+      <p></p>
+    </div>
+  </div>
+
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+
+      <div class="column has-text-centered">
+        <div class="content">
+          <h2 class="title is-4">Satellite</h2>
+          <img id="tgm_1" src="./data/tgm/tgm_1.gif" width="400">
+        </div>
+      </div>
+
+      <div class="column has-text-centered">
+        <div class="content">
+          <h2 class="title is-4">Enhanced Generated</h2>
+          <img id="tgm_2" src="./data/tgm/tgm_2.gif" width="400">
+        </div>
+      </div>
+
+      <div class="column has-text-centered">
+        <div class="content">
+          <h2 class="title is-4">Enhanced Ground Truth</h2>
+          <img id="tgm_3" src="./data/tgm/tgm_3.gif" width="400">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-3">BibTeX</h2>
+    <pre><code>
+      @INPROCEEDINGS{10342068,
+        author={Xiao, Jiuhong and Tortei, Daniel and Roura, Eloy and Loianno, Giuseppe},
+        booktitle={2023 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)}, 
+        title={Long-Range UAV Thermal Geo-Localization with Satellite Imagery}, 
+        year={2023},
+        volume={},
+        number={},
+        pages={5820-5827},
+        doi={10.1109/IROS55552.2023.10342068}}
+    </code></pre>
+  </div>
+</section> -->
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+        <img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website adapted from the Nerfies templates, which is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            If you use the <a href="https://xjh19971.github.io/STHN/">source code</a> of this website,
+            please also link back to the <a href="https://github.com/nerfies/nerfies.github.io">Nerfies source code</a> in your footer.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
