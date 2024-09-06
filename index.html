@@ -89,13 +89,13 @@
           <h2 class="title is-6 publlication-title"></h2>
           <div class="is-size-6 publication-authors">
             <span class="author-block">
-              <a href="https://xjh19971.github.io">Jiuhong Xiao</a><sup>1</sup>,</span>
+              <a href="https://xjh19971.github.io">Jiuhong Xiao</a>,</span>
               <span class="author-block">
-                <a href="https://engineering.nyu.edu/faculty/giuseppe-loianno">Giuseppe Loianno</a><sup>1</sup>,</span> 
+                <a href="https://engineering.nyu.edu/faculty/giuseppe-loianno">Giuseppe Loianno</a>,</span> 
           </div>
 
           <div class="is-size-6 publication-authors">
-            <span class="author-block"><sup>1</sup>New York University</a>,
+            <span class="author-block">New York University</a>
           </div>
 
           <div class="column has-text-centered">
@@ -153,7 +153,7 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Geo-localization is an essential component of Unmanned Aerial Vehicle (UAV) navigation systems to ensure precise absolute self-localization in outdoor environments. To address the challenges of GPS signal interruptions or low illumination, Thermal Geo-localization (TG) employs aerial thermal imagery to align with reference satellite maps to accurately determine the UAV’s location. However, existing TG methods lack uncertainty measurement in their outputs, compromising system robustness in the presence of textureless or corrupted thermal images, self-similar or outdated satellite maps, geometric noises, or thermal images exceeding satellite maps. To overcome these limitations, this paper presents \textit{UASTHN}, a novel approach for Uncertainty Estimation (UE) in Deep Homography Estimation (DHE) tasks for TG applications. Specifically, we introduce a novel Crop-based Test-Time Augmentation (CropTTA) strategy, which leverages the homography consensus of cropped image views to measure data uncertainty effectively. This approach complements Deep Ensembles (DE), offering comparable performance with improved efficiency and seamless integration with any DHE model. Extensive experiments across multiple DHE models demonstrate the effectiveness and efficiency of CropTTA in TG applications. Analysis of detected failure cases underscores the improved reliability of CropTTA under challenging conditions. Finally, we demonstrate the capability of combining CropTTA and DE for a comprehensive assessment of both data and model uncertainty. Our research provides profound insights into the broader intersection of localization and uncertainty estimation. The code will be publicly available.
+            Geo-localization is an essential component of Unmanned Aerial Vehicle (UAV) navigation systems to ensure precise absolute self-localization in outdoor environments. To address the challenges of GPS signal interruptions or low illumination, Thermal Geo-localization (TG) employs aerial thermal imagery to align with reference satellite maps to accurately determine the UAV’s location. However, existing TG methods lack uncertainty measurement in their outputs, compromising system robustness in the presence of textureless or corrupted thermal images, self-similar or outdated satellite maps, geometric noises, or thermal images exceeding satellite maps. To overcome these limitations, this paper presents <em>UASTHN</em>, a novel approach for Uncertainty Estimation (UE) in Deep Homography Estimation (DHE) tasks for TG applications. Specifically, we introduce a novel Crop-based Test-Time Augmentation (CropTTA) strategy, which leverages the homography consensus of cropped image views to measure data uncertainty effectively. This approach complements Deep Ensembles (DE), offering comparable performance with improved efficiency and seamless integration with any DHE model. Extensive experiments across multiple DHE models demonstrate the effectiveness and efficiency of CropTTA in TG applications. Analysis of detected failure cases underscores the improved reliability of CropTTA under challenging conditions. Finally, we demonstrate the capability of combining CropTTA and DE for a comprehensive assessment of both data and model uncertainty. Our research provides profound insights into the broader intersection of localization and uncertainty estimation. The code will be publicly available.
           </p>
         </div>
       </div>
@@ -161,27 +161,11 @@
     </div>
 </section>
 
-<!-- <section class="section">
-  <div class="columns is-centered has-text-centered">
-    <div class="column is-four-fifths">
-      <h2 class="title is-3">Boson-nighttime</h2>
-      <div class="content has-text-justified">
-        <p>
-          We used FLIR's Boson thermal imager (8.7 mm focal length, 640p resolution, and 50-degree horizontal field of view). The collected images are nadir at approx. 1m/px spatial resolution. We performed six flights from 9:00 PM to 4:00 AM and label this dataset as Boson-nighttime, accordingly. To create a single map, we first run a structure-from-motion (SfM) algorithm to reconstruct the thermal map from multiple views. Subsequently, orthorectification is performed by aligning the photometric satellite maps with thermal maps at the same spatial resolution. The ground area covered by Boson-nighttime measures 33km^2 in total. The most prevalent map feature is the desert, with small portions of farms, roads, and buildings. The low-contrast self-similar thermal features in the desert regions have made it difficult for geo-localization at a finer scale. The Bing satellite map (https://www.bing.com/maps/aerial) is cropped in the corresponding area as our satellite reference map. We tile the thermal map into 512x512 px thermal image crops with a stride of 35 px. Each thermal image crop pairs with the corresponding satellite image crop. Areas covered by three flights of Boson-nighttime are used for training and validation. The remaining areas, covered by the other three flights are used for testing. The train/validation/test splits for Boson-nighttime are 10256/13011/26568 pairs of satellite and thermal image crops, respectively. 
-        </p>
-      </div>
-      <p><img id="tgm_1" src="./data/boson-nighttime.png" width="500"></p>
-    </div>
-  </div>
-
- 
-</section>
-
-<section class="hero is-light">
+<!-- <section class="hero is-light">
 <div class="hero-body">
   <div class="columns is-centered has-text-centered">
     <div class="column">
-      <h2 class="title is-3" >SGM Results - <span style="color: green;">Green</span> is Correct, <span style="color: red;">Red</span> is Wrong</h2>
+      <h2 class="title is-3" >UASTHN Detected Failure Cases</h2>
       <p></p>
     </div>
   </div>
@@ -232,32 +216,7 @@
     </div>
   </div>
 
-  <div class="container is-max-desktop">
-    <div class="columns is-centered">
 
-      <div class="column has-text-centered">
-        <div class="content">
-          <h2 class="title is-4">Satellite</h2>
-          <img id="tgm_1" src="./data/tgm/tgm_1.gif" width="400">
-        </div>
-      </div>
-
-      <div class="column has-text-centered">
-        <div class="content">
-          <h2 class="title is-4">Enhanced Generated</h2>
-          <img id="tgm_2" src="./data/tgm/tgm_2.gif" width="400">
-        </div>
-      </div>
-
-      <div class="column has-text-centered">
-        <div class="content">
-          <h2 class="title is-4">Enhanced Ground Truth</h2>
-          <img id="tgm_3" src="./data/tgm/tgm_3.gif" width="400">
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
@@ -275,6 +234,87 @@
     </code></pre>
   </div>
 </section> -->
+
+<section class="section">
+  <div class="columns is-centered has-text-centered">
+    <div class="column">
+      <h2 class="title is-3">UASTHN Detected Failure Cases</h2>
+      <p>Thermal images overlap with satellite images, showing <span style="color: rgb(0, 255, 0);">ground truth</span> and <span style="color: red;">predicted</span> displacements. Thermal images are overlaid on predicted displacements on the satellite imagery for visualization.</p>
+    </div>
+  </div>
+<div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column has-text-centered">
+        <div class="content">
+          <h2 class="title is-4">Textureless Thermal Images</h2>
+          <img id="tgm_1" src="data/demo/VIS/TT/train_overlap_bbox_2350_rej.png" width="300">
+          <img id="tgm_1" src="data/demo/VIS/TT/train_overlap_bbox_18329_rej.png" width="300">
+          <img id="tgm_1" src="data/demo/VIS/TT/train_overlap_bbox_18418_rej.png" width="300">
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="container is-max-desktop">
+  <div class="columns is-centered">
+    <div class="column has-text-centered">
+      <div class="content">
+        <h2 class="title is-4">Corrupted Thermal Images</h2>
+        <img id="tgm_1" src="data/demo/VIS/CT/train_overlap_bbox_15_rej.png" width="300">
+        <img id="tgm_1" src="data/demo/VIS/CT/train_overlap_bbox_17_rej.png" width="300">
+        <img id="tgm_1" src="data/demo/VIS/CT/train_overlap_bbox_30_rej.png" width="300">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container is-max-desktop">
+  <div class="columns is-centered">
+    <div class="column has-text-centered">
+      <div class="content">
+        <h2 class="title is-4">Geometric Noises</h2>
+        <img id="tgm_1" src="data/demo/VIS/GEO/train_overlap_bbox_12_rej.png" width="300">
+        <img id="tgm_1" src="data/demo/VIS/GEO/train_overlap_bbox_229_rej.png" width="300">
+        <img id="tgm_1" src="data/demo/VIS/GEO/train_overlap_bbox_230_rej.png" width="300">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container is-max-desktop">
+  <div class="columns is-centered">
+    <div class="column has-text-centered">
+      <div class="content">
+        <h2 class="title is-4">Self-similar Satellite Maps</h2>
+        <img id="tgm_1" src="data/demo/VIS/SS/train_overlap_bbox_581_rej.png" width="300">
+        <img id="tgm_1" src="data/demo/VIS/SS/train_overlap_bbox_4064_rej.png" width="300">
+        <img id="tgm_1" src="data/demo/VIS/SS/train_overlap_bbox_6616_rej.png" width="300">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container is-max-desktop">
+  <div class="columns is-centered">
+    <div class="column has-text-centered">
+      <div class="content">
+        <h2 class="title is-4">Thermal Image Exceeding Satellite Maps</h2>
+        <img id="tgm_1" src="data/demo/VIS/EX/train_overlap_bbox_17_rej.png" width="300">
+        <img id="tgm_1" src="data/demo/VIS/EX/train_overlap_bbox_23_rej.png" width="300">
+        <img id="tgm_1" src="data/demo/VIS/EX/train_overlap_bbox_115_rej.png" width="300">
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container is-max-desktop">
+  <div class="columns is-centered">
+    <div class="column has-text-centered">
+      <div class="content">
+        <h2 class="title is-4">Thermal Image Exceeding Satellite Maps</h2>
+        <img id="tgm_1" src="data/demo/VIS/OS/1.svg" width="300">
+        <img id="tgm_1" src="data/demo/VIS/OS/2.svg" width="300">
+        <img id="tgm_1" src="data/demo/VIS/OS/3.svg" width="300">
+      </div>
+    </div>
+  </div>
+</div>
+</section>
 
 <footer class="footer">
   <div class="container">
