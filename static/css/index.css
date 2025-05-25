@@ -63,7 +63,7 @@ body {
 
 .publication-awards {
     color: #ff3860;
-    width: fit-content;
+    text-align: center;
     font-weight: bolder;
 }
 
