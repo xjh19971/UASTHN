@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <link rel = "icon" href = "assets/title_image.png" type = "image/x-icon">
-        
+  <link rel="icon" href="assets/title_image.png" type="image/x-icon">
+
   <meta charset="utf-8">
   <meta name="description"
-        content="UASTHN: Uncertainty-Aware Deep Homography Estimation for UAV Satellite-Thermal Geo-localization">
-  <meta name="keywords" content="Satellite Imagery, Thermal Imagery, Visual Geo-localization">
-  <meta name="viewport" content="width=device-width, initial-scale=1">    
+    content="UASTHN: Uncertainty-Aware Deep Homography Estimation for UAV Satellite-Thermal Geo-localization">
+  <meta name="keywords" content="Satellite Imagery, Thermal Imagery, Visual Geo-localization, Uncertainty Estimation, Deep Homography, UAV">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>UASTHN: Deep Homography Estimation for UAV Thermal Geo-localization with Satellite Imagery</title>
 
   <script>
@@ -22,15 +23,13 @@
     gtag('config', 'G-PYVRSFMDRL');
   </script>
 
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
 
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
   <link rel="icon" href="./static/images/favicon.svg">
 
@@ -39,9 +38,153 @@
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+  <style>
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    .results-table th {
+      background-color: #3273dc;
+      color: white;
+      padding: 0.6rem 0.5rem;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .results-table td {
+      padding: 0.5rem;
+      text-align: center;
+      border-bottom: 1px solid #e8e8e8;
+    }
+
+    .results-table tbody tr:hover {
+      background-color: #f0f4ff;
+    }
+
+    .results-table .best {
+      font-weight: 700;
+      color: #3273dc;
+    }
+
+    .results-table .second {
+      text-decoration: underline;
+    }
+
+    .results-table .method-col {
+      text-align: left;
+      font-weight: 500;
+    }
+
+    .results-table .category-col {
+      text-align: left;
+      font-size: 0.8rem;
+      color: #666;
+    }
+
+    .results-table .group-header td {
+      background-color: #f5f5f5;
+      font-weight: 700;
+      text-align: left;
+      border-top: 2px solid #dbdbdb;
+    }
+
+    .highlight-box {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .highlight-item {
+      text-align: center;
+      padding: 1.5rem 2rem;
+      background: white;
+      border-radius: 8px;
+      border: 1px solid #e8e8e8;
+      min-width: 180px;
+    }
+
+    .highlight-item .num {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #3273dc;
+      line-height: 1.2;
+    }
+
+    .highlight-item .label {
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: 0.25rem;
+    }
+
+    .contribution-list {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .contribution-list li {
+      margin-bottom: 0.75rem;
+      line-height: 1.6;
+    }
+
+    .gallery-category {
+      margin-bottom: 2rem;
+    }
+
+    .gallery-category h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      padding-left: 0.75rem;
+      border-left: 3px solid #3273dc;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+    }
+
+    .gallery-grid img {
+      width: 100%;
+      border-radius: 4px;
+      border: 1px solid #e8e8e8;
+    }
+
+    figure {
+      margin: 0 0 1.5rem 0;
+    }
+
+    figcaption {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 0.5rem;
+    }
+
+    .inference-table {
+      max-width: 680px;
+      margin: 1.5rem auto 0;
+    }
+
+    @media (max-width: 640px) {
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+      .highlight-box {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
 
 </head>
+
 <body>
 
   <nav class="navbar" role="navigation" aria-label="main navigation">
@@ -55,11 +198,11 @@
     <div class="navbar-menu">
       <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
         <a class="navbar-item" href="https://xjh19971.github.io/">
-        <span class="icon">
+          <span class="icon">
             <i class="fas fa-home"></i>
-        </span>
+          </span>
         </a>
-  
+
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link">
             Related Research
@@ -74,247 +217,465 @@
           </div>
         </div>
       </div>
-  
+
     </div>
   </nav>
 
 
-<section class="hero">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column has-text-centered">
-          <h1 class="title is-2 publication-title">UASTHN: Uncertainty-Aware Deep Homography Estimation for UAV Satellite-Thermal Geo-localization</h1>
-          <h2 class="subtitle is-4 publication-venue"> IEEE International Conference on Robotics & Automation (ICRA) 2025 </h2>
-          <h3 class="subtitle is-4 publication-awards"> Best Poster Award Finalist – Thermal Infrared in Robotics Workshop, ICRA 2025 </h2>
-          <div class="is-size-6 publication-authors">
-            <span class="author-block">
-              <a href="https://xjh19971.github.io">Jiuhong Xiao</a>,</span>
-              <span class="author-block">
-                <a href="https://engineering.nyu.edu/faculty/giuseppe-loianno">Giuseppe Loianno</a>,</span> 
-          </div>
-
-          <div class="is-size-6 publication-authors">
-            <span class="author-block">New York University</a>
-          </div>
-
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
           <div class="column has-text-centered">
+            <h1 class="title is-2 publication-title">UASTHN: Uncertainty-Aware Deep Homography Estimation for UAV
+              Satellite-Thermal Geo-localization</h1>
+            <h2 class="subtitle is-4 publication-venue"> IEEE International Conference on Robotics & Automation (ICRA)
+              2025 </h2>
+            <h3 class="subtitle is-4 publication-awards"> Best Poster Award Finalist – Thermal Infrared in Robotics
+              Workshop, ICRA 2025 </h3>
+            <div class="is-size-6 publication-authors">
+              <span class="author-block">
+                <a href="https://xjh19971.github.io">Jiuhong Xiao</a>,</span>
+              <span class="author-block">
+                <a href="https://engineering.nyu.edu/faculty/giuseppe-loianno">Giuseppe Loianno</a>,</span>
+            </div>
+
+            <div class="is-size-6 publication-authors">
+              <span class="author-block">New York University</span>
+            </div>
+
+            <div class="column has-text-centered">
               <span class="link-block">
-                <a href="https://arxiv.org/abs/2502.01035"
-                   class="external-link button is-normal ">
+                <a href="https://arxiv.org/abs/2502.01035" class="external-link button is-normal ">
                   <span class="icon">
-                      <i class="ai ai-arxiv"></i>
+                    <i class="ai ai-arxiv"></i>
                   </span>
                   <span>arXiv</span>
                 </a>
               </span>
               <span class="link-block">
-                <a href="https://youtu.be/i_PAvzXKul4"
-                   class="external-link button is-normal ">
+                <a href="https://youtu.be/i_PAvzXKul4" class="external-link button is-normal ">
                   <span class="icon">
-                      <i class="fab fa-youtube"></i>
+                    <i class="fab fa-youtube"></i>
                   </span>
                   <span>Video</span>
                 </a>
               </span>
               <span class="link-block">
                 <a href="https://huggingface.co/datasets/xjh19972/boson-nighttime/tree/main/satellite-thermal-dataset-v3"
-                   class="external-link button is-normal">
+                  class="external-link button is-normal">
                   <span class="icon">
-                      <i class="fa fa-face-smiling-hands"></i>
+                    <i class="fas fa-database"></i>
                   </span>
                   <span>HF Dataset</span>
-                  </a>
+                </a>
               </span>
               <span class="link-block">
-                <a href="https://github.com/arplaboratory/UASTHN"
-                   class="external-link button is-normal ">
+                <a href="https://github.com/arplaboratory/UASTHN" class="external-link button is-normal ">
                   <span class="icon">
-                      <i class="fab fa-github"></i>
+                    <i class="fab fa-github"></i>
                   </span>
                   <span>Code</span>
-                  </a>
+                </a>
               </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TL;DR -->
+      <div class="container">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-full">
+            <div class="notification is-info is-light" style="margin-bottom: 0;">
+              <h2 class="title is-3">TL;DR</h2>
+              <p class="is-size-5">
+                UASTHN introduces <strong>CropTTA</strong>, a simple crop-based test-time augmentation that provides
+                <strong>model-agnostic data uncertainty estimation</strong> for deep homography estimation in
+                satellite-thermal geo-localization, achieving <strong>7m geo-localization error</strong> with a
+                <strong>97% success rate</strong>.
+              </p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="hero teaser">
-  <div class="hero-body">
-    <!-- Paper video. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-three-fifths">
-        <h2 class="title is-3">Video</h2>
-        <div class="publication-video">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/i_PAvzXKul4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>      </div>
+  <!-- Video -->
+  <section class="hero teaser">
+    <div class="hero-body">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-three-fifths">
+          <h2 class="title is-3">Video</h2>
+          <div class="publication-video">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/i_PAvzXKul4"
+              title="YouTube video player" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+          </div>
+        </div>
       </div>
     </div>
-    </div>
-    <!--Paper video-->
-</section>
+  </section>
 
-<section class="hero is-small is-light">
-  <div class="hero-body">
-  <div class="container is-max-desktop">
-    <!-- Abstract. -->
+  <!-- Abstract -->
+  <section class="hero is-small is-light">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-full">
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+                Geo-localization is an essential component of Unmanned Aerial Vehicle (UAV) navigation systems to ensure
+                precise absolute self-localization in outdoor environments. To address the challenges of GPS signal
+                interruptions or low illumination, Thermal Geo-localization (TG) employs aerial thermal imagery to align
+                with reference satellite maps to accurately determine the UAV's location. However, existing TG methods
+                lack uncertainty measurement in their outputs, compromising system robustness in the presence of
+                textureless or corrupted thermal images, self-similar or outdated satellite maps, geometric noises, or
+                thermal images exceeding satellite maps. To overcome these limitations, this paper presents
+                <em>UASTHN</em>, a novel approach for Uncertainty Estimation (UE) in Deep Homography Estimation (DHE)
+                tasks for TG applications. Specifically, we introduce a novel Crop-based Test-Time Augmentation (CropTTA)
+                strategy, which leverages the homography consensus of cropped image views to measure data uncertainty
+                effectively. This approach complements Deep Ensembles (DE), offering comparable performance with improved
+                efficiency and seamless integration with any DHE model. Extensive experiments across multiple DHE models
+                demonstrate the effectiveness and efficiency of CropTTA in TG applications. Analysis of detected failure
+                cases underscores the improved reliability of CropTTA under challenging conditions. Finally, we
+                demonstrate the capability of combining CropTTA and DE for a comprehensive assessment of both data and
+                model uncertainty.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Data Uncertainty Teaser -->
+  <section class="hero is-light">
+    <div class="hero-body">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Data Uncertainty in Thermal Geo-localization</h2>
+          <div class="content has-text-justified">
+            <p>
+              UASTHN captures six categories of high data-uncertainty samples leading to geo-localization failure,
+              where <span style="color: red; font-weight: 600;">predicted</span> displacements significantly deviate
+              from the <span style="color: green; font-weight: 600;">ground truth</span>. Thermal images are overlaid
+              on predicted displacements on the satellite imagery for visualization.
+            </p>
+          </div>
+          <figure>
+            <img src="data/demo/figures/teaser-1.png" width="1000" alt="UASTHN teaser: six categories of data uncertainty"
+              loading="lazy">
+            <figcaption>
+              Categories from left to right: (a) Textureless features, (b) Image corruption,
+              (c) Geometric noise, (d) Self-similar maps, (e) Exceeding regions, (f) Outdated maps.
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Method Overview -->
+  <section class="section">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
+        <h2 class="title is-3">Method Overview</h2>
         <div class="content has-text-justified">
           <p>
-            Geo-localization is an essential component of Unmanned Aerial Vehicle (UAV) navigation systems to ensure precise absolute self-localization in outdoor environments. To address the challenges of GPS signal interruptions or low illumination, Thermal Geo-localization (TG) employs aerial thermal imagery to align with reference satellite maps to accurately determine the UAV’s location. However, existing TG methods lack uncertainty measurement in their outputs, compromising system robustness in the presence of textureless or corrupted thermal images, self-similar or outdated satellite maps, geometric noises, or thermal images exceeding satellite maps. To overcome these limitations, this paper presents <em>UASTHN</em>, a novel approach for Uncertainty Estimation (UE) in Deep Homography Estimation (DHE) tasks for TG applications. Specifically, we introduce a novel Crop-based Test-Time Augmentation (CropTTA) strategy, which leverages the homography consensus of cropped image views to measure data uncertainty effectively. This approach complements Deep Ensembles (DE), offering comparable performance with improved efficiency and seamless integration with any DHE model. Extensive experiments across multiple DHE models demonstrate the effectiveness and efficiency of CropTTA in TG applications. Analysis of detected failure cases underscores the improved reliability of CropTTA under challenging conditions. Finally, we demonstrate the capability of combining CropTTA and DE for a comprehensive assessment of both data and model uncertainty. Our research provides profound insights into the broader intersection of localization and uncertainty estimation. The code will be publicly available.
+            UASTHN combines CropTTA for data uncertainty with Deep Ensembles for model uncertainty. CropTTA augments
+            thermal images by cropping with specific offsets. The homography network F<sub>H</sub> with an uncertainty
+            estimation module calculates aggregated displacements and data uncertainty. High-uncertainty samples are
+            rejected. Optionally, Deep Ensembles estimate model uncertainty, which can be combined with CropTTA for
+            comprehensive assessment.
           </p>
         </div>
+
+        <figure>
+          <img src="data/demo/figures/framework-1.png" width="1000" alt="UASTHN Framework" loading="lazy">
+          <figcaption>
+            <strong>UASTHN Framework.</strong> CropTTA augments thermal images, and network F<sub>H</sub> with a UE
+            module calculates aggregated displacements and data uncertainty. High-uncertainty samples are rejected.
+            Optionally, DE estimates model uncertainty for comprehensive UE.
+          </figcaption>
+        </figure>
+
+        <h3 class="title is-4" style="margin-top: 2rem;">CropTTA Sampling Methods</h3>
+        <div class="columns is-centered">
+          <div class="column is-one-third has-text-centered">
+            <figure>
+              <img src="data/demo/figures/crop1-1.png" alt="Crop offset" loading="lazy" style="max-width: 100%;">
+              <figcaption>(a) Crop offsets</figcaption>
+            </figure>
+          </div>
+          <div class="column is-one-third has-text-centered">
+            <figure>
+              <img src="data/demo/figures/crop2-1.png" alt="Random sampling" loading="lazy" style="max-width: 100%;">
+              <figcaption>(b) Random sampling</figcaption>
+            </figure>
+          </div>
+          <div class="column is-one-third has-text-centered">
+            <figure>
+              <img src="data/demo/figures/crop3-1.png" alt="Grid sampling" loading="lazy" style="max-width: 100%;">
+              <figcaption>(c) Grid sampling</figcaption>
+            </figure>
+          </div>
+        </div>
+        <p style="font-size: 0.9rem; color: #666; text-align: center;">
+          Visualization of crop offsets and sampling methods. Colored boxes represent cropping regions with different
+          offsets.
+        </p>
       </div>
     </div>
-    </div>
-</section>
+  </section>
 
-<!-- <section class="hero is-light">
-<div class="hero-body">
-  <div class="columns is-centered has-text-centered">
-    <div class="column">
-      <h2 class="title is-3" >UASTHN Detected Failure Cases</h2>
-      <p></p>
-    </div>
-  </div>
+  <!-- Quantitative Results -->
+  <section class="hero is-light">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-full">
+            <h2 class="title is-3">Quantitative Results</h2>
+            <p class="subtitle is-6" style="margin-top: -0.5rem; color: #666;">
+              Comparison of uncertainty estimation methods across DHE baselines at W<sub>S</sub> = 1536.
+              All baselines trained with real and synthesized thermal data.
+            </p>
+          </div>
+        </div>
 
-  <div class="container is-max-desktop">
-    <div class="columns is-centered">
+        <div class="columns is-centered">
+          <div class="column is-full">
+            <div class="table-container">
+              <table class="results-table">
+                <thead>
+                  <tr>
+                    <th rowspan="2">DHE Method</th>
+                    <th rowspan="2">UE Method</th>
+                    <th rowspan="2">Uncertainty</th>
+                    <th colspan="3">D<sub>C</sub> = 128m</th>
+                    <th colspan="3">D<sub>C</sub> = 256m</th>
+                    <th colspan="3">D<sub>C</sub> = 512m</th>
+                  </tr>
+                  <tr>
+                    <th>MACE</th><th>CE</th><th>SR</th>
+                    <th>MACE</th><th>CE</th><th>SR</th>
+                    <th>MACE</th><th>CE</th><th>SR</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- DHN -->
+                  <tr class="group-header"><td colspan="12">DHN</td></tr>
+                  <tr>
+                    <td class="method-col"></td><td class="category-col">&mdash;</td><td class="category-col">&mdash;</td>
+                    <td>73.60</td><td>73.58</td><td>100%</td>
+                    <td>171.93</td><td>171.02</td><td>100%</td>
+                    <td>342.41</td><td>341.11</td><td>100%</td>
+                  </tr>
+                  <tr>
+                    <td class="method-col"></td><td class="category-col">DE</td><td class="category-col">model</td>
+                    <td class="best">61.91</td><td class="best">61.90</td><td>97.3%</td>
+                    <td>162.77</td><td>162.75</td><td>96.4%</td>
+                    <td>346.26</td><td>346.21</td><td>93.6%</td>
+                  </tr>
+                  <tr>
+                    <td class="method-col"></td><td class="category-col">DM</td><td class="category-col">data</td>
+                    <td>66.77</td><td>66.76</td><td>99.3%</td>
+                    <td>164.19</td><td>164.17</td><td>99.7%</td>
+                    <td class="best">335.81</td><td class="best">335.77</td><td>91.7%</td>
+                  </tr>
+                  <tr>
+                    <td class="method-col"></td><td class="category-col">CropTTA</td><td class="category-col">data</td>
+                    <td>64.18</td><td>62.78</td><td>98.6%</td>
+                    <td class="second">162.04</td><td class="second">161.82</td><td>95.1%</td>
+                    <td>337.90</td><td>337.84</td><td>91.5%</td>
+                  </tr>
+                  <tr>
+                    <td class="method-col"></td><td class="category-col">CropTTA+DE</td><td class="category-col">data+model</td>
+                    <td class="second">64.09</td><td class="second">62.70</td><td>96.6%</td>
+                    <td class="best">161.84</td><td class="best">161.62</td><td>96.1%</td>
+                    <td class="second">336.41</td><td class="second">336.47</td><td>93.6%</td>
+                  </tr>
+                  <!-- IHN -->
+                  <tr class="group-header"><td colspan="12">IHN</td></tr>
+                  <tr>
+                    <td class="method-col"></td><td class="category-col">&mdash;</td><td class="category-col">&mdash;</td>
+                    <td>7.27</td><td>7.24</td><td>100%</td>
+                    <td>16.78</td><td>16.42</td><td>100%</td>
+                    <td>16.42</td><td>15.90</td><td>100%</td>
+                  </tr>
+                  <tr>
+                    <td class="method-col"></td><td class="category-col">DE</td><td class="category-col">model</td>
+                    <td class="best">6.07</td><td class="best">6.06</td><td>97.9%</td>
+                    <td>12.31</td><td>12.13</td><td>97.6%</td>
+                    <td>13.73</td><td>13.37</td><td>94.5%</td>
+                  </tr>
+                  <tr>
+                    <td class="method-col"></td><td class="category-col">DM</td><td class="category-col">data</td>
+                    <td class="second">7.02</td><td class="second">6.99</td><td>100%</td>
+                    <td class="second">11.81</td><td>11.40</td><td>100%</td>
+                    <td>11.48</td><td>11.14</td><td>94.1%</td>
+                  </tr>
+                  <tr>
+                    <td class="method-col"></td><td class="category-col">CropTTA</td><td class="category-col">data</td>
+                    <td>7.46</td><td>7.47</td><td>97.4%</td>
+                    <td>11.91</td><td class="second">10.80</td><td>97.5%</td>
+                    <td class="best">9.27</td><td class="best">8.06</td><td>95.0%</td>
+                  </tr>
+                  <tr>
+                    <td class="method-col"></td><td class="category-col">CropTTA+DE</td><td class="category-col">data+model</td>
+                    <td>7.25</td><td>7.26</td><td>95.7%</td>
+                    <td class="best">11.57</td><td class="best">10.44</td><td>97.1%</td>
+                    <td class="second">10.67</td><td class="second">9.41</td><td>93.8%</td>
+                  </tr>
+                  <!-- STHN -->
+                  <tr class="group-header"><td colspan="12">STHN (two-stage)</td></tr>
+                  <tr>
+                    <td class="method-col"></td><td class="category-col">&mdash;</td><td class="category-col">&mdash;</td>
+                    <td class="best">7.51</td><td class="best">6.66</td><td>100%</td>
+                    <td>14.99</td><td>14.34</td><td>100%</td>
+                    <td>12.70</td><td>12.12</td><td>100%</td>
+                  </tr>
+                  <tr>
+                    <td class="method-col"></td><td class="category-col">DE</td><td class="category-col">model</td>
+                    <td>9.45</td><td>8.72</td><td>98.1%</td>
+                    <td>9.98</td><td>9.09</td><td>95.3%</td>
+                    <td>8.29</td><td>7.58</td><td>97.3%</td>
+                  </tr>
+                  <tr>
+                    <td class="method-col"></td><td class="category-col">DM</td><td class="category-col">data</td>
+                    <td>9.75</td><td>8.68</td><td>100%</td>
+                    <td>13.64</td><td>12.91</td><td>100%</td>
+                    <td>11.35</td><td>10.64</td><td>100%</td>
+                  </tr>
+                  <tr>
+                    <td class="method-col"></td><td class="category-col">CropTTA</td><td class="category-col">data</td>
+                    <td>8.26</td><td>7.75</td><td>98.5%</td>
+                    <td class="second">7.85</td><td class="second">7.31</td><td>95.8%</td>
+                    <td class="second">7.93</td><td class="second">7.25</td><td>97.5%</td>
+                  </tr>
+                  <tr>
+                    <td class="method-col"></td><td class="category-col">CropTTA+DE</td><td class="category-col">data+model</td>
+                    <td class="second">8.16</td><td class="second">7.65</td><td>98.1%</td>
+                    <td class="best">7.50</td><td class="best">6.97</td><td>94.5%</td>
+                    <td class="best">7.83</td><td class="best">7.15</td><td>97.0%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="has-text-centered" style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+              <span class="best">Blue bold</span> = best result.
+              <span class="second">Underlined</span> = second best.
+            </p>
 
-      <div class="column has-text-centered">
-        <div class="content">
-          <h2 class="title is-4">Input</h2>
-          <img id="sgm_1" src="./data/sgm/image35.gif" width="400">
-          <img id="sgm_2" src="./data/sgm/image42.gif" width="400">
-          <img id="sgm_3" src="./data/sgm/image36.gif" width="400">
-          <img id="sgm_4" src="./data/sgm/image39.gif" width="400">
+            <!-- Inference Time -->
+            <h3 class="title is-4" style="margin-top: 2.5rem;">Inference Time</h3>
+            <div class="table-container inference-table">
+              <table class="results-table">
+                <thead>
+                  <tr>
+                    <th>Method</th>
+                    <th>Early Stop</th>
+                    <th>w/o UE</th>
+                    <th>CropTTA</th>
+                    <th>DE</th>
+                    <th>CropTTA+DE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td class="method-col">IHN</td><td>&cross;</td><td>35.2</td><td>64.6</td><td>114.6</td><td>164.2</td></tr>
+                  <tr><td class="method-col">IHN</td><td>&check;</td><td>&mdash;</td><td>54.6</td><td>63.1</td><td>92.1</td></tr>
+                  <tr><td class="method-col">STHN</td><td>&cross;</td><td>63.9</td><td>87.0</td><td>130.2</td><td>186.0</td></tr>
+                  <tr><td class="method-col">STHN</td><td>&check;</td><td>&mdash;</td><td>78.2</td><td>81.9</td><td>118.6</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="has-text-centered" style="margin-top: 0.5rem; color: #666; font-size: 0.85rem;">
+              Inference time (ms) with 5 samples on NVIDIA RTX 2080Ti. Early stopping reduces overhead while maintaining accuracy.
+            </p>
+          </div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="column has-text-centered">
-        <div class="content">
-          <h2 class="title is-4">Baseline</h2>
-          <img id="sgm_5" src="./data/sgm/image31.gif" width="400">
-          <img id="sgm_6" src="./data/sgm/image32.gif" width="400">
-          <img id="sgm_7" src="./data/sgm/image33.gif" width="400">
-          <img id="sgm_8" src="./data/sgm/image34.gif" width="400">
+  <!-- Detected Failure Cases -->
+  <section class="section">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Detected Failure Cases</h2>
+        <div class="content has-text-justified">
+          <p>
+            Thermal images overlap with satellite images, showing
+            <span style="color: rgb(0, 255, 0);">ground truth</span> and
+            <span style="color: red;">predicted</span> displacements. Thermal images are overlaid on predicted
+            displacements on the satellite imagery for visualization.
+          </p>
+        </div>
+
+        <div class="gallery-category">
+          <h4>Textureless Thermal Images</h4>
+          <div class="gallery-grid">
+            <img src="data/demo/VIS/TT/train_overlap_bbox_2350_rej.png" alt="Textureless case 1" loading="lazy">
+            <img src="data/demo/VIS/TT/train_overlap_bbox_18329_rej.png" alt="Textureless case 2" loading="lazy">
+            <img src="data/demo/VIS/TT/train_overlap_bbox_18418_rej.png" alt="Textureless case 3" loading="lazy">
+          </div>
+        </div>
+
+        <div class="gallery-category">
+          <h4>Corrupted Thermal Images</h4>
+          <div class="gallery-grid">
+            <img src="data/demo/VIS/CT/train_overlap_bbox_15_rej.png" alt="Corrupted case 1" loading="lazy">
+            <img src="data/demo/VIS/CT/train_overlap_bbox_17_rej.png" alt="Corrupted case 2" loading="lazy">
+            <img src="data/demo/VIS/CT/train_overlap_bbox_30_rej.png" alt="Corrupted case 3" loading="lazy">
+          </div>
+        </div>
+
+        <div class="gallery-category">
+          <h4>Geometric Noises</h4>
+          <div class="gallery-grid">
+            <img src="data/demo/VIS/GEO/train_overlap_bbox_12_rej.png" alt="Geometric noise case 1" loading="lazy">
+            <img src="data/demo/VIS/GEO/train_overlap_bbox_229_rej.png" alt="Geometric noise case 2" loading="lazy">
+            <img src="data/demo/VIS/GEO/train_overlap_bbox_230_rej.png" alt="Geometric noise case 3" loading="lazy">
+          </div>
+        </div>
+
+        <div class="gallery-category">
+          <h4>Self-similar Satellite Maps</h4>
+          <div class="gallery-grid">
+            <img src="data/demo/VIS/SS/train_overlap_bbox_581_rej.png" alt="Self-similar case 1" loading="lazy">
+            <img src="data/demo/VIS/SS/train_overlap_bbox_4064_rej.png" alt="Self-similar case 2" loading="lazy">
+            <img src="data/demo/VIS/SS/train_overlap_bbox_6616_rej.png" alt="Self-similar case 3" loading="lazy">
+          </div>
+        </div>
+
+        <div class="gallery-category">
+          <h4>Thermal Image Exceeding Satellite Maps</h4>
+          <div class="gallery-grid">
+            <img src="data/demo/VIS/EX/train_overlap_bbox_17_rej.png" alt="Exceeding case 1" loading="lazy">
+            <img src="data/demo/VIS/EX/train_overlap_bbox_23_rej.png" alt="Exceeding case 2" loading="lazy">
+            <img src="data/demo/VIS/EX/train_overlap_bbox_115_rej.png" alt="Exceeding case 3" loading="lazy">
+          </div>
+        </div>
+
+        <div class="gallery-category">
+          <h4>Outdated Satellite Maps Not Reflecting Recent Changes</h4>
+          <div class="gallery-grid">
+            <img src="data/demo/VIS/OS/1.svg" alt="Outdated map case 1" loading="lazy">
+            <img src="data/demo/VIS/OS/2.svg" alt="Outdated map case 2" loading="lazy">
+            <img src="data/demo/VIS/OS/3.svg" alt="Outdated map case 3" loading="lazy">
+          </div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="column has-text-centered">
-        <div class="content">
-          <h2 class="title is-4">Ours</h2>
-          <img id="sgm_9" src="./data/sgm/image37.gif" width="400">
-          <img id="sgm_6" src="./data/sgm/image38.gif" width="400">
-          <img id="sgm_7" src="./data/sgm/image40.gif" width="400">
-          <img id="sgm_8" src="./data/sgm/image41.gif" width="400">
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</section>
-
-
-<section class="section">
-  <div class="columns is-centered has-text-centered">
-    <div class="column">
-      <h2 class="title is-3">TGM Generated Thermal Images</h2>
-      <p></p>
-    </div>
-  </div> -->
-
-
-
-<section class="section">
-  <div class="columns is-centered has-text-centered">
-    <div class="column">
-      <h2 class="title is-3">UASTHN Detected Failure Cases</h2>
-      <p>Thermal images overlap with satellite images, showing <span style="color: rgb(0, 255, 0);">ground truth</span> and <span style="color: red;">predicted</span> displacements. Thermal images are overlaid on predicted displacements on the satellite imagery for visualization.</p>
-    </div>
-  </div>
-<div class="container is-max-desktop">
-    <div class="columns is-centered">
-      <div class="column has-text-centered">
-        <div class="content">
-          <h2 class="title is-4">Textureless Thermal Images</h2>
-          <img id="tgm_1" src="data/demo/VIS/TT/train_overlap_bbox_2350_rej.png" width="300">
-          <img id="tgm_1" src="data/demo/VIS/TT/train_overlap_bbox_18329_rej.png" width="300">
-          <img id="tgm_1" src="data/demo/VIS/TT/train_overlap_bbox_18418_rej.png" width="300">
-        </div>
-      </div>
-    </div>
-  </div>
-<div class="container is-max-desktop">
-  <div class="columns is-centered">
-    <div class="column has-text-centered">
-      <div class="content">
-        <h2 class="title is-4">Corrupted Thermal Images</h2>
-        <img id="tgm_1" src="data/demo/VIS/CT/train_overlap_bbox_15_rej.png" width="300">
-        <img id="tgm_1" src="data/demo/VIS/CT/train_overlap_bbox_17_rej.png" width="300">
-        <img id="tgm_1" src="data/demo/VIS/CT/train_overlap_bbox_30_rej.png" width="300">
-      </div>
-    </div>
-  </div>
-</div>
-<div class="container is-max-desktop">
-  <div class="columns is-centered">
-    <div class="column has-text-centered">
-      <div class="content">
-        <h2 class="title is-4">Geometric Noises</h2>
-        <img id="tgm_1" src="data/demo/VIS/GEO/train_overlap_bbox_12_rej.png" width="300">
-        <img id="tgm_1" src="data/demo/VIS/GEO/train_overlap_bbox_229_rej.png" width="300">
-        <img id="tgm_1" src="data/demo/VIS/GEO/train_overlap_bbox_230_rej.png" width="300">
-      </div>
-    </div>
-  </div>
-</div>
-<div class="container is-max-desktop">
-  <div class="columns is-centered">
-    <div class="column has-text-centered">
-      <div class="content">
-        <h2 class="title is-4">Self-similar Satellite Maps</h2>
-        <img id="tgm_1" src="data/demo/VIS/SS/train_overlap_bbox_581_rej.png" width="300">
-        <img id="tgm_1" src="data/demo/VIS/SS/train_overlap_bbox_4064_rej.png" width="300">
-        <img id="tgm_1" src="data/demo/VIS/SS/train_overlap_bbox_6616_rej.png" width="300">
-      </div>
-    </div>
-  </div>
-</div>
-<div class="container is-max-desktop">
-  <div class="columns is-centered">
-    <div class="column has-text-centered">
-      <div class="content">
-        <h2 class="title is-4">Thermal Image Exceeding Satellite Maps</h2>
-        <img id="tgm_1" src="data/demo/VIS/EX/train_overlap_bbox_17_rej.png" width="300">
-        <img id="tgm_1" src="data/demo/VIS/EX/train_overlap_bbox_23_rej.png" width="300">
-        <img id="tgm_1" src="data/demo/VIS/EX/train_overlap_bbox_115_rej.png" width="300">
-      </div>
-    </div>
-  </div>
-</div>
-<div class="container is-max-desktop">
-  <div class="columns is-centered">
-    <div class="column has-text-centered">
-      <div class="content">
-        <h2 class="title is-4">Outdated Satellite Maps Not Reflecting Recent Changes</h2>
-        <img id="tgm_1" src="data/demo/VIS/OS/1.svg" width="300">
-        <img id="tgm_1" src="data/demo/VIS/OS/2.svg" width="300">
-        <img id="tgm_1" src="data/demo/VIS/OS/3.svg" width="300">
-      </div>
-    </div>
-  </div>
-</div>
-</section>
-
-<section class="section" id="BibTeX">
-  <div class="container is-max-desktop content">
-    <h2 class="title is-3">BibTeX</h2>
-    <pre><code>
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title is-3">BibTeX</h2>
+      <pre><code>
     @article{xiao2025uasthn,
       title={UASTHN: Uncertainty-Aware Deep Homography Estimation for UAV Satellite-Thermal Geo-localization},
       author={Xiao, Jiuhong and Loianno, Giuseppe},
@@ -322,31 +683,36 @@
       year={2025}
     }
     </code></pre>
-  </div>
-</section>
-  
-<footer class="footer">
-  <div class="container">
-    <div class="content has-text-centered">
-      <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
-        <img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />
-      </a>
     </div>
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content">
-          <p>
-            This website adapted from the Nerfies templates, which is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
-          <p>
-            If you use the <a href="https://xjh19971.github.io/STHN/">source code</a> of this website,
-            please also link back to the <a href="https://github.com/nerfies/nerfies.github.io">Nerfies source code</a> in your footer.
-          </p>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+          <img alt="Creative Commons License" style="border-width:0"
+            src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" />
+        </a>
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This website adapted from the Nerfies templates, which is licensed under a <a rel="license"
+                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0
+                International License</a>.
+            </p>
+            <p>
+              If you use the <a href="https://xjh19971.github.io/STHN/">source code</a> of this website,
+              please also link back to the <a href="https://github.com/nerfies/nerfies.github.io">Nerfies source
+                code</a> in your footer.
+            </p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</footer>
+  </footer>
 
 </body>
+
 </html>
